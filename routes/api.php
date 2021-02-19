@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIExpensesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+Route::group(['prefix'=>'expenses'], function (){
+    Route::get('/', [APIExpensesController::class, 'index']);
+    Route::get('/{id}', [APIExpensesController::class, 'show']);
+    Route::get('/{id}/cancel', [APIExpensesController::class, 'cancel']);
+    Route::get('/{id}/approve', [APIExpensesController::class, 'approve']);
+    Route::get('/{id}/reject', [APIExpensesController::class, 'reject']);
 });
